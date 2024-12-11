@@ -8,7 +8,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -17,7 +16,7 @@ public class Task {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private UUID id;
+    private int id;
 
     @NotNull
     @NotBlank
@@ -27,12 +26,12 @@ public class Task {
     @NotBlank
     private String description;
 
-    @CreationTimestamp
-    private LocalDateTime creationTime;
+//    @CreationTimestamp
+//    private LocalDateTime creationTime;
+//
+//    private LocalDateTime deadline;
 
-    private LocalDateTime deadline;
-
-    @NotNull
-    private Priority priority;
+//    @NotNull
+//    private Priority priority;
 
 }
