@@ -1,6 +1,6 @@
-package dawidbialek.todolist.services;
+package dawidbialek.todolist.service;
 
-import dawidbialek.todolist.entities.Task;
+import dawidbialek.todolist.entity.Task;
 import org.springframework.data.domain.Page;
 
 import java.util.Optional;

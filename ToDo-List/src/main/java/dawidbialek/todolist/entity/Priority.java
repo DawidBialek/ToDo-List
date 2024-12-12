@@ -1,4 +1,4 @@
-package dawidbialek.todolist.entities;
+package dawidbialek.todolist.entity;
 
 public enum Priority {
     LOW,
