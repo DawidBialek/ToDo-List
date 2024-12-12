@@ -1,6 +1,6 @@
 # To-do App
 
-Todo is an Spring based application written in Java.
+Todo is a Spring based application written in Java.
 
 ## Installation
 
