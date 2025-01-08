@@ -1,29 +1,45 @@
 package dawidbialek.todolist.service;
 
 import dawidbialek.todolist.entity.Task;
-import org.springframework.data.domain.Page;
+import dawidbialek.todolist.mapper.TaskMapper;
+import dawidbialek.todolist.model.TaskDTO;
+import dawidbialek.todolist.repository.TaskRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
+@Service
+@RequiredArgsConstructor
 public class TaskServiceImpl implements TaskService {
+    private final TaskRepository taskRepository;
+    private final TaskMapper taskMapper;
+
     @Override
-    public Page<Task> listTasks() {
+    public List<TaskDTO> listTasks() {
+        return taskRepository.findAll()
+                .stream()
+                .map(taskMapper::taskToTaskDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<TaskDTO> getTaskById(UUID taskId) {
+        return taskRepository.findById(taskId).map(taskMapper::taskToTaskDTO);
+    }
+
+    // TODO: Implement methods
+
+    @Override
+    public Task saveNewTask(TaskDTO task) {
         return null;
     }
 
     @Override
-    public Optional<Task> getTaskById(UUID taskId) {
-        return Optional.empty();
-    }
-
-    @Override
-    public Task saveNewTask(Task task) {
-        return null;
-    }
-
-    @Override
-    public Optional<Task> updateTaskById(UUID taskId, Task task) {
+    public Optional<TaskDTO> updateTaskById(UUID taskId, TaskDTO task) {
         return Optional.empty();
     }
 
@@ -33,7 +49,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Optional<Task> patchTaskById(UUID taskId, Task task) {
+    public Optional<TaskDTO> patchTaskById(UUID taskId, TaskDTO task) {
         return Optional.empty();
     }
 }

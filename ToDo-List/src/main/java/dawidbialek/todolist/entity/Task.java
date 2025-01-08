@@ -1,13 +1,19 @@
 package dawidbialek.todolist.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDateTime;
+
+@Getter
+@Setter
+@Builder
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class Task {
 
     @Id
@@ -22,12 +28,14 @@ public class Task {
     @NotBlank
     private String description;
 
-//    @CreationTimestamp
-//    private LocalDateTime creationTime;
-//
-//    private LocalDateTime deadline;
+    @CreationTimestamp
+    private LocalDateTime creationTime;
 
-//    @NotNull
-//    private Priority priority;
+    private LocalDateTime deadline;
+
+    @NotNull
+    private Priority priority;
 
 }
+
+
