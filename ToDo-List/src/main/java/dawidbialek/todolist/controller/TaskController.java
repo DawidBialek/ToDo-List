@@ -1,13 +1,14 @@
 package dawidbialek.todolist.controller;
 
+import dawidbialek.todolist.entity.Task;
 import dawidbialek.todolist.model.TaskDTO;
 import dawidbialek.todolist.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.crossstore.ChangeSetPersister;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -22,5 +23,25 @@ public class TaskController {
     @GetMapping(value = TASK_PATH_ID)
     public TaskDTO getTaskById(@PathVariable("taskId") int taskId) throws ChangeSetPersister.NotFoundException {
         return taskService.getTaskById(taskId).orElseThrow(ChangeSetPersister.NotFoundException::new);
+    }
+
+    @GetMapping(value = TASK_PATH + "s")
+    public List<TaskDTO> getTasks() {
+        return taskService.listTasks();
+    }
+
+    @PostMapping(TASK_PATH)
+    public TaskDTO createTask(@RequestBody TaskDTO task){
+        return taskService.saveNewTask(task);
+    }
+
+    @PutMapping(TASK_PATH_ID)
+    public Optional<TaskDTO> updateTask(@PathVariable("taskId") int id, @RequestBody TaskDTO task){
+        return Optional.ofNullable(taskService.updateTaskById(id, task));
+    }
+
+    @DeleteMapping(TASK_PATH_ID)
+    public Boolean deleteTask(@PathVariable("taskId") int id){
+        return taskService.deleteTaskById(id);
     }
 }

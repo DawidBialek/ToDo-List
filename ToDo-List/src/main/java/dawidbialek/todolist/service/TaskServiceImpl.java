@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,18 +33,27 @@ public class TaskServiceImpl implements TaskService {
     // TODO: Implement methods
 
     @Override
-    public Task saveNewTask(TaskDTO task) {
-        return null;
+    public TaskDTO saveNewTask(TaskDTO task) {
+        return taskMapper.taskToTaskDTO(taskRepository.save(taskMapper.taskDTOToTask(task)));
     }
 
     @Override
-    public Optional<TaskDTO> updateTaskById(int taskId, TaskDTO task) {
-        return Optional.empty();
+    public TaskDTO updateTaskById(int taskId, TaskDTO task) {
+        Task updatedTask = taskRepository.findById(taskId).orElseThrow();
+        updatedTask.setTitle(task.getTitle());
+        updatedTask.setDescription(task.getDescription());
+        updatedTask.setDeadline(task.getDeadline());
+        updatedTask.setPriority(task.getPriority());
+        return taskMapper.taskToTaskDTO(taskRepository.save(updatedTask));
     }
 
     @Override
     public Boolean deleteTaskById(int id) {
-        return null;
+        if(taskRepository.existsById(id)){
+            taskRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 
     @Override

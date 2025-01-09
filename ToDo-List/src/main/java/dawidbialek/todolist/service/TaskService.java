@@ -1,13 +1,9 @@
 package dawidbialek.todolist.service;
 
-import dawidbialek.todolist.entity.Task;
 import dawidbialek.todolist.model.TaskDTO;
-import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public interface TaskService {
     // list, getById, save, update, delete, patch
@@ -16,9 +12,9 @@ public interface TaskService {
 
     Optional<TaskDTO> getTaskById(int taskId);
 
-    Task saveNewTask(TaskDTO task);
+    TaskDTO saveNewTask(TaskDTO task);
 
-    Optional<TaskDTO> updateTaskById(int taskId, TaskDTO task);
+    TaskDTO updateTaskById(int taskId, TaskDTO task);
 
     Boolean deleteTaskById(int id);
 
