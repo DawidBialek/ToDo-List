@@ -14,13 +14,13 @@ public interface TaskService {
 
     List<TaskDTO> listTasks();
 
-    Optional<TaskDTO> getTaskById(UUID taskId);
+    Optional<TaskDTO> getTaskById(int taskId);
 
     Task saveNewTask(TaskDTO task);
 
-    Optional<TaskDTO> updateTaskById(UUID taskId, TaskDTO task);
+    Optional<TaskDTO> updateTaskById(int taskId, TaskDTO task);
 
-    Boolean deleteTaskById(UUID id);
+    Boolean deleteTaskById(int id);
 
-    Optional<TaskDTO> patchTaskById(UUID taskId, TaskDTO task);
+    Optional<TaskDTO> patchTaskById(int taskId, TaskDTO task);
 }

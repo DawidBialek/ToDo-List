@@ -27,7 +27,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Optional<TaskDTO> getTaskById(UUID taskId) {
+    public Optional<TaskDTO> getTaskById(int taskId) {
         return taskRepository.findById(taskId).map(taskMapper::taskToTaskDTO);
     }
 
@@ -39,17 +39,17 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Optional<TaskDTO> updateTaskById(UUID taskId, TaskDTO task) {
+    public Optional<TaskDTO> updateTaskById(int taskId, TaskDTO task) {
         return Optional.empty();
     }
 
     @Override
-    public Boolean deleteTaskById(UUID id) {
+    public Boolean deleteTaskById(int id) {
         return null;
     }
 
     @Override
-    public Optional<TaskDTO> patchTaskById(UUID taskId, TaskDTO task) {
+    public Optional<TaskDTO> patchTaskById(int taskId, TaskDTO task) {
         return Optional.empty();
     }
 }

@@ -20,7 +20,7 @@ public class TaskController {
     private final TaskService taskService;
 
     @GetMapping(value = TASK_PATH_ID)
-    public TaskDTO getTaskById(@PathVariable("taskId") UUID taskId) throws ChangeSetPersister.NotFoundException {
+    public TaskDTO getTaskById(@PathVariable("taskId") int taskId) throws ChangeSetPersister.NotFoundException {
         return taskService.getTaskById(taskId).orElseThrow(ChangeSetPersister.NotFoundException::new);
     }
 }
