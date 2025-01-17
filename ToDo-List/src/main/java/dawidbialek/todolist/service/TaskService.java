@@ -14,7 +14,7 @@ public interface TaskService {
 
     TaskDTO saveNewTask(TaskDTO task);
 
-    TaskDTO updateTaskById(int taskId, TaskDTO task);
+    Optional<TaskDTO> updateTaskById(int taskId, TaskDTO task);
 
     Boolean deleteTaskById(int id);
 

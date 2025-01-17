@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
@@ -37,7 +36,7 @@ public class TaskController {
 
     @PutMapping(TASK_PATH_ID)
     public Optional<TaskDTO> updateTask(@PathVariable("taskId") int id, @RequestBody TaskDTO task){
-        return Optional.ofNullable(taskService.updateTaskById(id, task));
+        return taskService.updateTaskById(id, task);
     }
 
     @DeleteMapping(TASK_PATH_ID)
