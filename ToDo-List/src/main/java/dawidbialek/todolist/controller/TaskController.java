@@ -4,6 +4,7 @@ import dawidbialek.todolist.entity.Task;
 import dawidbialek.todolist.model.TaskDTO;
 import dawidbialek.todolist.service.TaskService;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,8 +21,8 @@ public class TaskController {
     private final TaskService taskService;
 
     @GetMapping(value = TASK_PATH_ID)
-    public TaskDTO getTaskById(@PathVariable("taskId") int taskId) throws ChangeSetPersister.NotFoundException {
-        return taskService.getTaskById(taskId).orElseThrow(ChangeSetPersister.NotFoundException::new);
+    public TaskDTO getTaskById(@PathVariable("taskId") int taskId) {
+        return taskService.getTaskById(taskId).orElseThrow(NotFoundException::new);
     }
 
     @GetMapping(value = TASK_PATH + "s")

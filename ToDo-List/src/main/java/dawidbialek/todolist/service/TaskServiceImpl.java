@@ -1,9 +1,8 @@
 package dawidbialek.todolist.service;
 
 import dawidbialek.todolist.entity.Priority;
-import dawidbialek.todolist.entity.Task;
 import dawidbialek.todolist.model.TaskDTO;
-import org.springframework.cglib.core.Local;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -15,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Primary
 public class TaskServiceImpl implements TaskService {
 
     private HashMap<Integer, TaskDTO> taskMap;
