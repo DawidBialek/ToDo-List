@@ -83,4 +83,20 @@ class TaskControllerTest {
                 .andExpect(status().isNotFound());
     }
 
+    @Test
+    void testListAllTasks() throws Exception {
+
+        given(taskService.listTasks()).willReturn(taskServiceImpl.listTasks());
+
+        mockMvc.perform(get(TaskController.TASK_PATH)
+                .with(httpBasic(USERNAME, PASSWORD))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.length()", is(3)));
+
+
+    }
+
+
 }

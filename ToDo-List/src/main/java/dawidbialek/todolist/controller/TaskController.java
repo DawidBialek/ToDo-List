@@ -25,7 +25,7 @@ public class TaskController {
         return taskService.getTaskById(taskId).orElseThrow(NotFoundException::new);
     }
 
-    @GetMapping(value = TASK_PATH + "s")
+    @GetMapping(value = TASK_PATH)
     public List<TaskDTO> getTasks() {
         return taskService.listTasks();
     }
