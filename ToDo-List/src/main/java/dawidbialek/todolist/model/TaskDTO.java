@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class TaskDTO {
-    private int id;
+    private Integer id;
     private String title;
     private String description;
     private LocalDateTime creationTime;
