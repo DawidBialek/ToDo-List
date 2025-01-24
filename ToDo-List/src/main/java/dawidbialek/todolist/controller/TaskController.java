@@ -1,11 +1,9 @@
 package dawidbialek.todolist.controller;
 
-import dawidbialek.todolist.entity.Task;
 import dawidbialek.todolist.model.TaskDTO;
 import dawidbialek.todolist.service.TaskService;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
-import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,6 +29,7 @@ public class TaskController {
     }
 
     @PostMapping(TASK_PATH)
+    @ResponseStatus(HttpStatus.CREATED)
     public TaskDTO createTask(@RequestBody TaskDTO task){
         return taskService.saveNewTask(task);
     }
