@@ -10,13 +10,13 @@ public interface TaskService {
 
     List<TaskDTO> listTasks();
 
-    Optional<TaskDTO> getTaskById(int taskId);
+    Optional<TaskDTO> getTaskById(Integer taskId);
 
     TaskDTO saveNewTask(TaskDTO task);
 
-    Optional<TaskDTO> updateTaskById(int taskId, TaskDTO task);
+    Optional<TaskDTO> updateTaskById(Integer taskId, TaskDTO task);
 
-    Boolean deleteTaskById(int id);
+    Boolean deleteTaskById(Integer id);
 
-    Optional<TaskDTO> patchTaskById(int taskId, TaskDTO task);
+    Optional<TaskDTO> patchTaskById(Integer taskId, TaskDTO task);
 }

@@ -26,7 +26,7 @@ public class TaskServiceImplJPA implements TaskService {
     }
 
     @Override
-    public Optional<TaskDTO> getTaskById(int taskId) {
+    public Optional<TaskDTO> getTaskById(Integer taskId) {
         return taskRepository.findById(taskId).map(taskMapper::taskToTaskDTO);
     }
 
@@ -38,7 +38,7 @@ public class TaskServiceImplJPA implements TaskService {
     }
 
     @Override
-    public Optional<TaskDTO> updateTaskById(int taskId, TaskDTO task) {
+    public Optional<TaskDTO> updateTaskById(Integer taskId, TaskDTO task) {
         Task updatedTask = taskRepository.findById(taskId).orElseThrow();
         updatedTask.setTitle(task.getTitle());
         updatedTask.setDescription(task.getDescription());
@@ -48,7 +48,7 @@ public class TaskServiceImplJPA implements TaskService {
     }
 
     @Override
-    public Boolean deleteTaskById(int id) {
+    public Boolean deleteTaskById(Integer id) {
         if(taskRepository.existsById(id)){
             taskRepository.deleteById(id);
             return true;
@@ -57,7 +57,7 @@ public class TaskServiceImplJPA implements TaskService {
     }
 
     @Override
-    public Optional<TaskDTO> patchTaskById(int taskId, TaskDTO task) {
+    public Optional<TaskDTO> patchTaskById(Integer taskId, TaskDTO task) {
         return Optional.empty();
     }
 }

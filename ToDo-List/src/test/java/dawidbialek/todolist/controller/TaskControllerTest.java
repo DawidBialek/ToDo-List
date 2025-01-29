@@ -5,7 +5,6 @@ import dawidbialek.todolist.config.SpringSecConfig;
 import dawidbialek.todolist.model.TaskDTO;
 import dawidbialek.todolist.service.TaskService;
 import dawidbialek.todolist.service.TaskServiceImpl;
-import dawidbialek.todolist.service.TaskServiceImplJPA;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -16,19 +15,20 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.core.Is.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.hamcrest.core.Is.is;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.mockito.BDDMockito.verify;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest
 @Import(SpringSecConfig.class)
@@ -44,10 +44,10 @@ class TaskControllerTest {
     TaskService taskService;
 
     @Captor
-    ArgumentCaptor<Integer> uuidArgumentCaptor;
+    ArgumentCaptor<Integer> integerArgumentCaptor;
 
     @Captor
-    ArgumentCaptor<TaskDTO> taskDTOArgumentCaptor;
+    ArgumentCaptor<TaskDTO> taskArgumentCaptor;
 
     TaskServiceImpl taskServiceImpl;
 
@@ -114,6 +114,59 @@ class TaskControllerTest {
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(task)))
                 .andExpect(status().isCreated());
+    }
+
+    @Test
+    void testUpdateTask() throws Exception {
+        TaskDTO task = taskServiceImpl.listTasks().getFirst();
+
+        given(taskService.updateTaskById(any(), any())).willReturn(Optional.of(TaskDTO.builder().build()));
+
+        mockMvc.perform(put(TaskController.TASK_PATH_ID, task.getId())
+                        .with(httpBasic(USERNAME, PASSWORD))
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(task)))
+                .andExpect(status().isNoContent());
+
+        verify(taskService).updateTaskById(any(Integer.class), any(TaskDTO.class));
+    }
+
+    @Test
+    void testDeleteTask() throws Exception {
+        TaskDTO task = taskServiceImpl.listTasks().getFirst();
+
+        given(taskService.deleteTaskById(any())).willReturn(true);
+
+        mockMvc.perform(delete(TaskController.TASK_PATH_ID, task.getId())
+                        .with(httpBasic(USERNAME, PASSWORD))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
+
+        ArgumentCaptor<Integer> argumentCaptor = ArgumentCaptor.forClass(Integer.class);
+        verify(taskService).deleteTaskById(argumentCaptor.capture());
+
+        assertThat(task.getId()).isEqualTo(argumentCaptor.getValue());
+    }
+
+    @Test
+    void testPatchTask() throws Exception {
+        TaskDTO task = taskServiceImpl.listTasks().getFirst();
+
+        Map<String, Object> taskMap = new HashMap<>();
+        taskMap.put("title", "New Title");
+
+        mockMvc.perform(patch(TaskController.TASK_PATH_ID, task.getId())
+                        .with(httpBasic(USERNAME, PASSWORD))
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(taskMap)))
+                .andExpect(status().isNoContent());
+
+        verify(taskService).patchTaskById(integerArgumentCaptor.capture(), taskArgumentCaptor.capture());
+
+        assertThat(task.getId()).isEqualTo(integerArgumentCaptor.getValue());
+        assertThat(taskMap.get("title")).isEqualTo(taskArgumentCaptor.getValue().getTitle());
     }
 
 }

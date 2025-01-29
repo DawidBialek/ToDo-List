@@ -60,7 +60,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Optional<TaskDTO> getTaskById(int taskId) {
+    public Optional<TaskDTO> getTaskById(Integer taskId) {
         return Optional.ofNullable(taskMap.get(taskId));
     }
 
@@ -81,7 +81,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Optional<TaskDTO> updateTaskById(int taskId, TaskDTO task) {
+    public Optional<TaskDTO> updateTaskById(Integer taskId, TaskDTO task) {
         TaskDTO existingTask = taskMap.get(taskId);
         existingTask.setTitle(task.getTitle());
         existingTask.setDescription(task.getDescription());
@@ -95,14 +95,14 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Boolean deleteTaskById(int id) {
+    public Boolean deleteTaskById(Integer id) {
         taskMap.remove(id);
 
         return true;
     }
 
     @Override
-    public Optional<TaskDTO> patchTaskById(int taskId, TaskDTO task) {
+    public Optional<TaskDTO> patchTaskById(Integer taskId, TaskDTO task) {
         TaskDTO existingTask = taskMap.get(taskId);
 
         if(StringUtils.hasText(task.getTitle())){

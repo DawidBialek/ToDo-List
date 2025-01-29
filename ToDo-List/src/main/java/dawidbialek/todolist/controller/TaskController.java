@@ -35,12 +35,21 @@ public class TaskController {
     }
 
     @PutMapping(TASK_PATH_ID)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public Optional<TaskDTO> updateTask(@PathVariable("taskId") int id, @RequestBody TaskDTO task){
         return taskService.updateTaskById(id, task);
     }
 
     @DeleteMapping(TASK_PATH_ID)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public Boolean deleteTask(@PathVariable("taskId") int id){
         return taskService.deleteTaskById(id);
+    }
+
+    @PatchMapping(TASK_PATH_ID)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public Optional<TaskDTO> patchBeerById(@PathVariable("taskId") Integer taskId, @RequestBody TaskDTO task) {
+
+        return taskService.patchTaskById(taskId, task);
     }
 }
